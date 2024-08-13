@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { Card, CardContent, Typography, CardMedia, LinearProgress } from '@mui/material';
-import { Link } from 'react-router-dom';
 
-export function PokemonCards({ name, imageUrl, attack, defense, hp, speed, type, sx, imgSx, nameSx }) {
+
+export function PokemonCards({ name, imageUrl, attack, defense, hp, speed, type, hasAdvantage, sx, imgSx, nameSx }) {
 
     const getProgressBarValue = (value) => Math.min(Math.max(value, 1), 10) / 10;
 
@@ -35,11 +35,16 @@ export function PokemonCards({ name, imageUrl, attack, defense, hp, speed, type,
                 <Typography gutterBottom variant="h5" component="div" sx={{ ...nameSx }}>
                     {name}
                 </Typography>
-                {/* {type && (
-                    <Typography variant="body2" sx={{ marginBottom: '8px' }}>
-                        Type: {type}
+                {type && (
+                    <Typography variant="body1" sx={{ marginBottom: '8px', display: 'flex', alignItems: 'center', fontWeight: 600 }}>
+                        {type}
+                        {hasAdvantage && (
+                            <Typography variant="body1" color="green" sx={{ marginLeft: '8px' }}>
+                                Advantage in attack
+                            </Typography>
+                        )}
                     </Typography>
-                )} */}
+                )}
                 {hp && (
                     <div>
 
@@ -50,11 +55,11 @@ export function PokemonCards({ name, imageUrl, attack, defense, hp, speed, type,
                             variant="determinate"
                             value={getProgressBarValue(hp) * 100}
                             sx={{
-                                height: '10px', 
-                                borderRadius: '5px', 
+                                height: '10px',
+                                borderRadius: '5px',
                                 marginBottom: '8px',
-                                backgroundColor: '#e0e0e0', 
-                                
+                                backgroundColor: '#e0e0e0',
+
                                 '& .MuiLinearProgress-bar': {
                                     backgroundColor: '#76ff03'
                                 }
@@ -71,11 +76,11 @@ export function PokemonCards({ name, imageUrl, attack, defense, hp, speed, type,
                             variant="determinate"
                             value={getProgressBarValue(attack) * 100}
                             sx={{
-                                height: '10px', 
-                                borderRadius: '5px', 
+                                height: '10px',
+                                borderRadius: '5px',
                                 marginBottom: '8px',
-                                backgroundColor: '#e0e0e0', 
-                                
+                                backgroundColor: '#e0e0e0',
+
                                 '& .MuiLinearProgress-bar': {
                                     backgroundColor: '#76ff03'
                                 }
@@ -92,11 +97,11 @@ export function PokemonCards({ name, imageUrl, attack, defense, hp, speed, type,
                             variant="determinate"
                             value={getProgressBarValue(defense) * 100}
                             sx={{
-                                height: '10px', 
-                                borderRadius: '5px', 
+                                height: '10px',
+                                borderRadius: '5px',
                                 marginBottom: '8px',
-                                backgroundColor: '#e0e0e0', 
-                                
+                                backgroundColor: '#e0e0e0',
+
                                 '& .MuiLinearProgress-bar': {
                                     backgroundColor: '#76ff03'
                                 }
@@ -107,18 +112,18 @@ export function PokemonCards({ name, imageUrl, attack, defense, hp, speed, type,
 
                 {speed && (
                     <div>
-                    <Typography variant="body2" >
-                        Speed
-                    </Typography>
-                    <LinearProgress
+                        <Typography variant="body2" >
+                            Speed
+                        </Typography>
+                        <LinearProgress
                             variant="determinate"
                             value={getProgressBarValue(speed) * 100}
                             sx={{
-                                height: '10px', 
-                                borderRadius: '5px', 
+                                height: '10px',
+                                borderRadius: '5px',
                                 marginBottom: '8px',
-                                backgroundColor: '#e0e0e0', 
-                                
+                                backgroundColor: '#e0e0e0',
+
                                 '& .MuiLinearProgress-bar': {
                                     backgroundColor: '#76ff03'
                                 }

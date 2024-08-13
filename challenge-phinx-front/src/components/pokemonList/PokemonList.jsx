@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePokemon } from '../../context/pokemonContext';
-import { PokemonCards } from '../pokemonCards/PokemonCards'; // Ajusta la ruta según sea necesario
+import { PokemonCards } from '../pokemonCards/PokemonCards';
 
 export default function PokemonList() {
     const pokemon = usePokemon();

@@ -1,5 +1,4 @@
 
-
 import './home.css'
 import { Button, Typography, Container } from '@mui/material';
 import { PokemonCards } from '../components/pokemonCards/PokemonCards';
@@ -7,12 +6,19 @@ import { usePokemon } from '../context/pokemonContext';
 import axios from 'axios';
 import { useState } from 'react';
 import defaultImage from '../assets/SiluetaPokemon2.png';
+import { typeAdvantages } from '../components/battle/advantages';
 
 export function Home() {
     const pokemon = usePokemon();
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     const [opponentPokemon, setOpponentPokemon] = useState(null);
     const [battleWinner, setBattleWinner] = useState('');
+    
+
+    const hasAdvantage = (pokemon1, pokemon2) => {
+        const advantage = typeAdvantages[pokemon1.type];
+        return advantage?.strongAgainst === pokemon2.type;
+    };
 
     const handleSelectPokemon = (p) => {
         if (selectedPokemon && selectedPokemon.name === p.name) {
@@ -27,7 +33,11 @@ export function Home() {
     };
 
     const handleBattle = async () => {
-        if (!selectedPokemon || !opponentPokemon) return;
+        if (!selectedPokemon) return;
+
+        const availablePokemon = pokemon.filter(p => p.name !== selectedPokemon.name);
+        const randomOpponent = availablePokemon[Math.floor(Math.random() * availablePokemon.length)]
+        setOpponentPokemon(randomOpponent)
     
         try {
             const response = await axios.post('/battle', {
@@ -43,10 +53,11 @@ export function Home() {
         }
     };
 
-    const renderPokemonCard = (pokemon, isSelected) => (
+    const renderPokemonCard = (pokemon, isSelected, hasAdvantage) => (
         <PokemonCards
         {...pokemon}
         imageUrl={pokemon?.imageUrl || defaultImage}
+        hasAdvantage={hasAdvantage}
             
             sx={{
                 width: '400px',
@@ -81,7 +92,7 @@ export function Home() {
                 sx={{
                     display: 'flex',
                     flexWrap: 'wrap',
-                    justifyContent: 'center',
+                    justifyContent: { xs: 'center', sm: 'center', md: 'flex-start' },
                     gap: '20px',
                     padding: '20px 0',
                 }}
@@ -92,9 +103,8 @@ export function Home() {
                             name={p.name}
                             imageUrl={p.imageUrl}
                             sx={{
-                                width: '194px',
-                                height: '200px',
-                                marginRight: '4px',
+                                width: { xs: '150px', sm: '180px', md: '200px' },
+                                height: { xs: '160px', sm: '180px', md: '200px' },
                                 cursor: 'pointer',
                                 border:
                                     selectedPokemon?.name === p.name ||
@@ -110,16 +120,17 @@ export function Home() {
             <Container
                 sx={{
                     height: '70px',
-                    width: '95%',
+                    width: { xs: '100%', sm: '94%' },
                     backgroundColor: '#e0f7fa',
                     border: '2px solid #424242',
                     boxShadow: 6,
                     borderRadius: '6px',
                     padding: '20px',
                     marginTop: '8px',
+                    textAlign: { xs: 'center', sm: 'left' },
                 }}
             >
-                <Typography variant="h5" component="h1" sx={{ textAlign: 'left' }}>
+                <Typography variant="h5" component="h1" >
                     {battleWinner ? `${battleWinner} wins!` : 'Select two Pokémon to battle'}
                 </Typography>
             </Container>
@@ -127,32 +138,34 @@ export function Home() {
             <Container
                 sx={{
                     display: 'flex',
-                    justifyContent: 'left',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    justifyContent: 'center',
                     alignItems: 'center',
                     marginTop: '30px',
                 }}
             >
-                {renderPokemonCard(selectedPokemon || {}, !!selectedPokemon)}
+                {renderPokemonCard(selectedPokemon || {}, !!selectedPokemon, 
+                    selectedPokemon && opponentPokemon && hasAdvantage(selectedPokemon, opponentPokemon)
+                )}
                 <Button
                     variant="contained"
                     color="success"
                     sx={{
-                        width: '200px',
-                        margin: '0 20px',
-                        marginLeft: '45px',
-                        marginRight: '45px',
-                        height: 'fit-content',
+                        width: { xs: '150px', sm: '180px', md: '200px' },
+                        margin: { xs: '10px', sm: '20px', md: '0 20px' },
+                        fontSize: { xs: '16px', sm: '20px', md: '24px' },
                         textTransform: 'none',
                         background: '#33691e',
-                        fontSize: '24px',
                         borderRadius: 2,
                     }}
                     onClick={handleBattle}
-                    disabled={!selectedPokemon || !opponentPokemon}
+                    disabled={!selectedPokemon}
                 >
                     Start Battle
                 </Button>
-                {renderPokemonCard(opponentPokemon || {}, !!opponentPokemon)}
+                {renderPokemonCard(opponentPokemon || {}, !!opponentPokemon,
+                    opponentPokemon && selectedPokemon && hasAdvantage(opponentPokemon, selectedPokemon)
+                )}
             </Container>
 
         </Container>
