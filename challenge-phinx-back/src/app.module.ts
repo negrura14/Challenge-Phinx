@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BattleResultModule } from './battle-result/battle-result.module';
+import { BattleModule } from './battle/battle.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { BattleResultModule } from './battle-result/battle-result.module';
       synchronize: true,
     }),
     PokemonModule,
-    BattleResultModule],
+    BattleResultModule,
+    BattleModule],
   controllers: [AppController],
   providers: [AppService],
 })
