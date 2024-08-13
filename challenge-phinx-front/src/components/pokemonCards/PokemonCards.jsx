@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardContent, Typography, CardMedia, LinearProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export function PokemonCards({ name, img, attack, defense, hp, speed, type, sx, imgSx, nameSx }) {
+export function PokemonCards({ name, imageUrl, attack, defense, hp, speed, type, sx, imgSx, nameSx }) {
 
     const getProgressBarValue = (value) => Math.min(Math.max(value, 1), 10) / 10;
 
@@ -21,7 +21,7 @@ export function PokemonCards({ name, img, attack, defense, hp, speed, type, sx, 
         }}>
             <CardMedia
                 component="img"
-                image={img}
+                image={imageUrl}
                 alt={`${name} img`}
                 sx={{
                     objectFit: 'contain',
@@ -35,11 +35,11 @@ export function PokemonCards({ name, img, attack, defense, hp, speed, type, sx, 
                 <Typography gutterBottom variant="h5" component="div" sx={{ ...nameSx }}>
                     {name}
                 </Typography>
-                {type && (
+                {/* {type && (
                     <Typography variant="body2" sx={{ marginBottom: '8px' }}>
                         Type: {type}
                     </Typography>
-                )}
+                )} */}
                 {hp && (
                     <div>
 
