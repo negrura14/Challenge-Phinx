@@ -6,7 +6,7 @@ import { BattleResult } from 'src/battle-result/entities/battle-result.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([BattleResult]),  // Importar el repositorio
+    TypeOrmModule.forFeature([BattleResult]), 
   ],
   controllers: [BattleController],
   providers: [BattleService],

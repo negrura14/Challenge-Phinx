@@ -7,6 +7,14 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class BattleService {
+    private readonly typeAdvantages = {
+        Fire: { strongAgainst: 'Grass', weakAgainst: 'Water' },
+        Water: { strongAgainst: 'Fire', weakAgainst: 'Electric' },
+        Grass: { strongAgainst: 'Water', weakAgainst: 'Fire' },
+        Electric: { strongAgainst: 'Water', weakAgainst: 'Grass' },
+        Normal: { strongAgainst: null, weakAgainst: 'Electric' },
+    }
+
     constructor(
         @InjectRepository(BattleResult)
         private battleResultRepository: Repository<BattleResult>
@@ -22,11 +30,13 @@ export class BattleService {
 
     //* Batalla
     while (p1.hp > 0 && p2.hp > 0) {
-        // Pokémon que ataca
+        
         const attacker = first;
         const defender = second;
 
-        const damage = Math.max(1, attacker.attack - defender.defense);
+        const baseDamage = Math.max(1, attacker.attack - defender.defense);
+        const typeModifier = this.getTypeModifier(attacker.type, defender.type)
+        const damage = Math.max(1, Math.floor(baseDamage * typeModifier));
         defender.hp = Math.max(0, defender.hp - damage);
 
         //* Cambio de turno
@@ -61,6 +71,17 @@ export class BattleService {
         } else {
             return [pokemon2, pokemon1];
         }
+    }
+  }
+  //*Calcular los daños con tipo
+  private getTypeModifier(attackerType: string, defenderType: string): number{
+    const advantage = this.typeAdvantages[attackerType];
+    if(advantage.strongAgainst === defenderType){
+        return 2; //* Daño doble si tiene ventaja
+    } else if (advantage.weakAgainst === defenderType) {
+        return 0.5; //*Daño dividido si tiene desventaja
+    } else {
+        return 1;
     }
   }
 }
