@@ -1,35 +1,55 @@
-# El Challenge
+# Challenge Phinx - Emanuel Nieto
 
-La aplicación es una batalla de Pokémon. Cada uno tiene diferentes stats, como ataque y defensa, por ejemplo, 
-y tenemos que hacerlos batallar entre ellos.
+## Descripción
 
-## Objetivos de Backend
+En este proyecto, se ha desarrollado una aplicación de batalla de Pokémon donde puedes seleccionar dos Pokémon para enfrentarlos en una batalla. La aplicación toma en cuenta los stats de cada Pokémon, así como sus tipos, para determinar un ganador.
 
-1. Implementar migraciones de DB, debe de popularse una tabla con los datos de los pokemon
-2. Implementar endpoint para listar todos los pokemon
-3. Implementar endpoint para hacerlos batallar
-4. Guardar los resultados de las batallas en una tabla
+## Instalación
 
-## Objetivos del Frontend
+### Clonación del Repositorio
 
-1. Implementar la UI/UX que liste y seleccione los pokemon
-2. Implementar la Card del Pokemon que liste los stats
-3. Cuando de Inicio a la batalla, se debe escoger automáticamente y aleatoriamente un contrincante diferente y luego mostrar el resultado
-4. Implementar Responsividad básica.
-5. Conectar con el Backend
+1. Abre tu terminal (o línea de comandos) y ejecuta el siguiente comando:
+   - git clone https://github.com/negrura14/Challenge-Phinx.git
+  
+2. Abrir el proyecto en visual estudio code:
+   -Una vez que el repositorio esté clonado, navega a la carpeta del proyecto: cd Challenge-Phinx
+   -Luego, abre Visual Studio Code en la carpeta del proyecto con el siguiente comando: code .
+   Esto abrirá el proyecto en Visual Studio Code, y podrás empezar a trabajar en él. Si usas otro IDE, el proceso será similar, solo asegúrate de abrir la carpeta del proyecto en tu IDE preferido.
 
-## Algoritmo de Batalla
 
-Para el cálculo de la batalla, ten en consideración lo siguiente:
+### Instalación de Dependencias
+    
+- Con el comando npm install se instalaran todas las dependencias.
 
-- El pokemon con la velocidad más alta hace el primer ataque, si son iguales, el pokemon con el ataque más alto va primero.
-- Para calcular el daño, resta la defensa del ataque (ataque-defensa). La diferencia es el daño. Si el ataque es igual o menor que la defensa el daño es 1.
-- El daño lo restas del HP.
-- Los pokemon pelearán por turnos. Todos los turnos serán calculados in el mismo request. Es por esto por lo que el endpoint debe retornar la data del ganador en la misma llamada.
-- El ganador es el que se reste el HP del enemigo a cero. 
-- NOTA: como adicional se podría implementar el sistema de tipos, pero no es requerido.
+### Configuración del Backend
+- Instalar las dependencias del backend:
+    - cd backend
+    - npm install
+- Iniciar el servidor:
+    - npm run start:dev
 
-## Tecnología a usar
+### Configuración del Frontend
+
+- Instalar las dependencias del Frontend:
+    - cd ../frontend
+    - npm install
+- Iniciar la aplicacion
+    - npm run dev
+
+Se abrirá la aplicación en tu navegador por defecto.
+
+## Uso
+
+### Selecciona dos Pokémon:
+- Haz clic en los Pokémon que deseas seleccionar para la batalla.
+
+### Inicia la batalla: 
+- Haz clic en el botón "Start Battle" para que el sistema determine el ganador basado en los stats y tipos de los Pokémon seleccionados.
+
+### Resultados: 
+-El resultado de la batalla se mostrará en la parte superior de la página.
+
+## Tecnologías Utilizadas
 
 Backend:
 - NestJs
@@ -38,8 +58,5 @@ Backend:
 
 Frontend:
 - React
+- Axios
 - MaterialUI
-
-## Modo de entrega
-
-El código se debe de entregar en un repositorio público para ser revisado. Por favor adicionar un readme con instrucciones.
